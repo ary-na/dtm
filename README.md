@@ -1,10 +1,10 @@
 # 🕰️ dtm
 > Dotfile Time Machine. Automatically snapshots your config files and pushes them to a private GitHub repo on a schedule.
 
-[![npm version](https://img.shields.io/npm/v/dtm?color=black&style=flat-square)](https://www.npmjs.com/package/dtm)
-[![npm downloads](https://img.shields.io/npm/dm/dtm?color=black&style=flat-square)](https://www.npmjs.com/package/dtm)
-[![license](https://img.shields.io/npm/l/dtm?color=black&style=flat-square)](./LICENSE)
-[![node](https://img.shields.io/node/v/dtm?color=black&style=flat-square)](https://nodejs.org)
+[![npm version](https://img.shields.io/npm/v/%40ariian%2Fdtm?color=black&style=flat-square)](https://www.npmjs.com/package/@ariian/dtm)
+[![npm downloads](https://img.shields.io/npm/dm/%40ariian%2Fdtm?color=black&style=flat-square)](https://www.npmjs.com/package/@ariian/dtm)
+[![license](https://img.shields.io/npm/l/%40ariian%2Fdtm?color=black&style=flat-square)](./LICENSE)
+[![node](https://img.shields.io/node/v/%40ariian%2Fdtm?color=black&style=flat-square)](https://nodejs.org)
 
 ---
 
@@ -15,7 +15,7 @@ I built dtm because I kept tweaking my `.zshrc`, breaking something weeks later,
 ## Install
 
 ```bash
-npm install -g dtm
+npm install -g @ariian/dtm
 ```
 
 ---
