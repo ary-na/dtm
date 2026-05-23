@@ -1,0 +1,56 @@
+{
+  "name": "dtm",
+  "version": "1.0.0",
+  "description": "Dotfile Time Machine — automated dotfile snapshots with GitHub backup",
+  "type": "module",
+  "bin": {
+    "dtm": "bin/index.js"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "dotfiles",
+    "backup",
+    "cli",
+    "git",
+    "macos",
+    "snapshot",
+    "restore",
+    "terminal",
+    "automation",
+    "config"
+  ],
+  "author": "arii",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ary-na/dtm.git"
+  },
+  "homepage": "https://github.com/ary-na/dtm#readme",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.22.3",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.3",
+    "chalk": "^5.6.2",
+    "commander": "^14.0.3",
+    "execa": "^9.6.1",
+    "ora": "^9.4.0",
+    "simple-git": "^3.36.0"
+  }
+}

@@ -1,0 +1,24 @@
+# source
+src/
+tsconfig.json
+
+# dev
+node_modules/
+package-lock.json
+*.log
+npm-debug.log*
+
+# os
+.DS_Store
+.DS_Store?
+._*
+
+# git
+.git/
+.gitignore
+.github/
+
+# tests
+tests/
+*.test.ts
+*.spec.ts
