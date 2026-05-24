@@ -61,6 +61,29 @@ export async function init(): Promise<void> {
 
   try {
     fs.mkdirSync(DTM_DIR, { recursive: true });
+
+    fs.writeFileSync(
+      path.join(DTM_DIR, ".gitignore"),
+      [
+        "# os",
+        ".DS_Store",
+        ".DS_Store?",
+        "._*",
+        ".Spotlight-V100",
+        ".Trashes",
+        "",
+        "# windows",
+        "Thumbs.db",
+        "ehthumbs.db",
+        "Desktop.ini",
+        "",
+        "# linux",
+        "*~",
+        ".fuse_hidden*",
+        ".nfs*",
+      ].join("\n"),
+    );
+
     await initRepo();
     await setRemote(remote);
 
