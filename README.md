@@ -53,7 +53,7 @@ git@github.com:you/dotfiles-backup.git
 Make sure your SSH key is added to your macOS Keychain so pushes work silently in the background:
 
 ```bash
-ssh-add --apple-use-keychain ~/.ssh/id_ed00000
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519
 ```
 
 Test it:
