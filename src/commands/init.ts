@@ -24,6 +24,14 @@ const DEFAULT_DOTFILES: DefaultDotfile[] = [
 export async function init(): Promise<void> {
   console.log(chalk.cyan("\n🕰  Dotfile Time Machine — Setup\n"));
 
+  if (fs.existsSync(DTM_DIR)) {
+    console.log(
+      chalk.yellow(
+        "dtm is already initialised. Run dtm reset first if you want to start over.\n",
+      ),
+    );
+    return;
+  }
   const remote = await input({
     message: "GitHub repo URL (SSH or HTTPS):",
     validate: (value) => (value.length > 0 ? true : "Please enter a valid URL"),
