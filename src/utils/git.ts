@@ -33,7 +33,15 @@ export async function commitSnapshot(): Promise<boolean> {
   const git = getGit();
   const status = await git.status();
   if (status.files.length === 0) return false;
-  const date = new Date().toISOString();
+  const date = new Date().toLocaleString(undefined, {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
   await git.add(".");
   await git.commit(`snapshot ${date}`);
   return true;

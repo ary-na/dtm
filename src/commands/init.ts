@@ -25,8 +25,7 @@ export async function init(): Promise<void> {
 
   const remote = await input({
     message: "GitHub repo URL (SSH or HTTPS):",
-    validate: (value) =>
-      value.length > 0 ? true : "Please enter a valid URL",
+    validate: (value) => (value.length > 0 ? true : "Please enter a valid URL"),
   });
 
   const scheduleHours = await select({
@@ -46,7 +45,7 @@ export async function init(): Promise<void> {
   });
 
   const availableDotfiles = DEFAULT_DOTFILES.filter((f) =>
-    fs.existsSync(f.path)
+    fs.existsSync(f.path),
   );
 
   const watched = await checkbox({
@@ -70,7 +69,7 @@ export async function init(): Promise<void> {
         name: path.basename(f.path),
         source: f.path,
         stored: path.join(DTM_DIR, path.basename(f.path)),
-      })
+      }),
     );
 
     writeConfig({
@@ -82,7 +81,7 @@ export async function init(): Promise<void> {
     });
 
     spinner.succeed(
-      chalk.green("Done! Run dtm snapshot to take your first snapshot.")
+      chalk.green("Done! Run dtm snapshot to take your first snapshot."),
     );
   } catch (err) {
     spinner.fail(chalk.red("Setup failed"));
