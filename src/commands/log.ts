@@ -7,7 +7,7 @@ export async function log(): Promise<void> {
 
     if (entries.length === 0) {
       console.log(
-        chalk.yellow("No snapshots yet. Run dtm --snapshot to create one."),
+        chalk.yellow("No snapshots yet. Run dtm snapshot to create one."),
       );
       return;
     }

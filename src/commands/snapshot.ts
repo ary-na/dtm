@@ -9,9 +9,7 @@ export async function snapshot(): Promise<void> {
 
   if (config.watched.length === 0) {
     console.log(
-      chalk.yellow(
-        "No files being tracked. Run dtm --watch <file> to add one.",
-      ),
+      chalk.yellow("No files being tracked. Run dtm watch <file> to add one."),
     );
     return;
   }
@@ -37,18 +35,16 @@ export async function snapshot(): Promise<void> {
     }
 
     if (config.autoPush) {
-      spinner.text = "Pushing to GitHub...";
+      spinner.succeed(chalk.green("Snapshot saved locally."));
+      const pushSpinner = ora("Pushing to GitHub...").start();
       await pushToRemote();
+      pushSpinner.succeed(chalk.green("Pushed to GitHub."));
+    } else {
+      spinner.succeed(chalk.green("Snapshot saved."));
     }
 
     config.lastSnapshot = new Date().toISOString();
     writeConfig(config);
-
-    spinner.succeed(
-      chalk.green(
-        `Snapshot saved${config.autoPush ? " and pushed to GitHub" : ""}`,
-      ),
-    );
   } catch (err) {
     spinner.fail(chalk.red("Snapshot failed"));
     console.error(err);

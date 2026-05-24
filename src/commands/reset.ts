@@ -37,7 +37,7 @@ export async function reset(): Promise<void> {
     spinner.succeed(chalk.green("dtm has been reset."));
     console.log(chalk.gray("\nRun dtm init to set up again."));
     console.log(
-      chalk.gray("Run npm uninstall -g dtm to remove the CLI itself.\n"),
+      chalk.gray("Run npm uninstall -g @ariian/dtm to remove the CLI itself.\n"),
     );
   } catch (err) {
     spinner.fail(chalk.red("Reset failed."));
