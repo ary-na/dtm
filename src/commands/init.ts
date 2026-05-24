@@ -6,6 +6,7 @@ import ora from "ora";
 import { DTM_DIR, HOME } from "../utils/paths.js";
 import { writeConfig, type WatchedFile } from "../utils/config.js";
 import { initRepo, setRemote } from "../utils/git.js";
+import { schedule } from "./schedule.js";
 
 interface DefaultDotfile {
   name: string;
@@ -35,6 +36,8 @@ export async function init(): Promise<void> {
       { name: "Every 12 hours", value: 12 },
       { name: "Once a day", value: 24 },
       { name: "Once a week", value: 168 },
+      { name: "Once a month", value: 720 },
+      { name: "Not yet", value: 0 },
     ],
     default: 24,
   });
@@ -84,6 +87,37 @@ export async function init(): Promise<void> {
       ].join("\n"),
     );
 
+    fs.writeFileSync(
+      path.join(DTM_DIR, "README.md"),
+      [
+        "# 🕰️ dotfiles",
+        "",
+        "My dotfile snapshots, automatically backed up with [dtm](https://www.npmjs.com/package/@ariian/dtm).",
+        "",
+        "## Commands",
+        "",
+        "```bash",
+        "dtm init                        # first time setup wizard",
+        "dtm snapshot                    # take a snapshot now",
+        "dtm log                         # show full snapshot history",
+        "dtm watch <path>                # start tracking a new file",
+        "dtm unwatch <path>              # stop tracking a file",
+        "dtm diff                        # what changed since last snapshot",
+        "dtm diff <file>                 # what changed in one specific file",
+        "dtm restore <file>              # restore a file to 1 snapshot ago",
+        "dtm restore <file> -n 5        # restore a file to 5 snapshots ago",
+        "dtm schedule                    # enable automatic snapshots",
+        "dtm schedule --off              # disable automatic snapshots",
+        "dtm status                      # show tracked files and last snapshot",
+        "dtm reset                       # remove all dtm data and config",
+        "```",
+        "",
+        "---",
+        "",
+        "[arii.dev](https://arii.dev)",
+      ].join("\n"),
+    );
+
     await initRepo();
     await setRemote(remote);
 
@@ -102,6 +136,10 @@ export async function init(): Promise<void> {
       watched: watchedFiles,
       lastSnapshot: null,
     });
+
+    if (scheduleHours > 0) {
+      await schedule();
+    }
 
     spinner.succeed(
       chalk.green("Done! Run dtm snapshot to take your first snapshot."),
