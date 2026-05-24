@@ -1,6 +1,6 @@
 {
   "name": "@ariian/dtm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dotfile Time Machine — automated dotfile snapshots with GitHub backup",
   "type": "module",
   "bin": {
