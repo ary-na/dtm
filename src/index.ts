@@ -10,13 +10,17 @@ import { restore } from "./commands/restore.js";
 import { schedule } from "./commands/schedule.js";
 import { status } from "./commands/status.js";
 import { reset } from "./commands/reset.js";
+import { createRequire } from "module";
+
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json") as { version: string };
 
 program
   .name("dtm")
   .description(
     "🕰  Dotfile Time Machine — automated dotfile snapshots with GitHub backup",
   )
-  .version("1.0.0");
+  .version(version);
 
 program.command("init").description("First time setup wizard").action(init);
 
