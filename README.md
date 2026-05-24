@@ -140,6 +140,8 @@ dtm schedule                    # enable automatic snapshots via launchd
 dtm schedule --off              # disable automatic snapshots
 ```
 
+Scheduling is enabled automatically during `dtm init`. You can disable or re-enable it anytime with the commands above.
+
 ### Reset
 
 ```bash
