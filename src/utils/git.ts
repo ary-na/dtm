@@ -80,6 +80,7 @@ export async function moveStoredFile(oldName: string, newName: string): Promise<
 
 export async function commitMigration(): Promise<void> {
   const git = getGit();
+  await git.add(".");
   const status = await git.status();
   if (status.files.length === 0) return;
   await git.commit("migrate to mirrored path structure");

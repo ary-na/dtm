@@ -49,6 +49,58 @@ export async function migrate(): Promise<void> {
       file.stored = newStored;
     }
 
+    fs.writeFileSync(
+      path.join(DTM_DIR, ".gitignore"),
+      [
+        "# os",
+        ".DS_Store",
+        "._*",
+        ".Spotlight-V100",
+        ".Trashes",
+        "",
+        "# windows",
+        "Thumbs.db",
+        "ehthumbs.db",
+        "Desktop.ini",
+        "",
+        "# linux",
+        "*~",
+        ".fuse_hidden*",
+        ".nfs*",
+      ].join("\n"),
+    );
+
+    fs.writeFileSync(
+      path.join(DTM_DIR, "README.md"),
+      [
+        "# 🕰️ dotfiles",
+        "",
+        "My dotfile snapshots",
+        "",
+        "## Commands",
+        "",
+        "```bash",
+        "dtm init                        # first time setup wizard",
+        "dtm snapshot                    # take a snapshot now",
+        "dtm log                         # show full snapshot history",
+        "dtm watch <path>                # start tracking a new file",
+        "dtm unwatch <path>              # stop tracking a file",
+        "dtm diff                        # what changed since last snapshot",
+        "dtm diff <file>                 # what changed in one specific file",
+        "dtm restore <file>              # restore a file to 1 snapshot ago",
+        "dtm restore <file> -n 5         # restore a file to 5 snapshots ago",
+        "dtm schedule                    # enable automatic snapshots",
+        "dtm schedule --off              # disable automatic snapshots",
+        "dtm status                      # show tracked files and last snapshot",
+        "dtm reset                       # remove all dtm data and config",
+        "```",
+        "",
+        "---",
+        "",
+        "Made with [dtm](https://www.npmjs.com/package/@ariian/dtm) · [arii.dev](https://arii.dev)",
+      ].join("\n"),
+    );
+
     await commitMigration();
     writeConfig(config);
 
