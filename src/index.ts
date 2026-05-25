@@ -10,6 +10,7 @@ import { restore } from "./commands/restore.js";
 import { schedule } from "./commands/schedule.js";
 import { status } from "./commands/status.js";
 import { reset } from "./commands/reset.js";
+import { migrate } from "./commands/migrate.js";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
@@ -66,5 +67,10 @@ program
   .command("reset")
   .description("Remove all dtm data and config")
   .action(reset);
+
+program
+  .command("migrate")
+  .description("Migrate stored files to the mirrored path structure (v1.2.0+)")
+  .action(migrate);
 
 program.parse();

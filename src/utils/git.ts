@@ -72,3 +72,15 @@ export async function removeStoredFile(fileName: string): Promise<void> {
   await git.rm([fileName]);
   await git.commit(`unwatch ${fileName}`);
 }
+
+export async function moveStoredFile(oldName: string, newName: string): Promise<void> {
+  const git = getGit();
+  await git.raw(["mv", oldName, newName]);
+}
+
+export async function commitMigration(): Promise<void> {
+  const git = getGit();
+  const status = await git.status();
+  if (status.files.length === 0) return;
+  await git.commit("migrate to mirrored path structure");
+}
