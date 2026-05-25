@@ -2,9 +2,11 @@ import fs from "fs";
 import path from "path";
 import chalk from "chalk";
 import { readConfig, writeConfig } from "../utils/config.js";
-import { resolvePath, DTM_DIR } from "../utils/paths.js";
+import { resolvePath, DTM_DIR, storedRelPath } from "../utils/paths.js";
+import { printHeader } from "../utils/header.js";
 
 export async function watch(filePath: string): Promise<void> {
+  printHeader("Watch");
   const config = readConfig();
   const resolved = resolvePath(filePath);
 
@@ -19,8 +21,9 @@ export async function watch(filePath: string): Promise<void> {
     return;
   }
 
-  const name = path.basename(resolved);
-  const stored = path.join(DTM_DIR, name);
+  const rel = storedRelPath(resolved);
+  const name = rel;
+  const stored = path.join(DTM_DIR, rel);
 
   config.watched.push({ name, source: resolved, stored });
   writeConfig(config);

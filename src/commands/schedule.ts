@@ -6,8 +6,10 @@ import { PLIST_PATH } from "../utils/paths.js";
 import { readConfig, writeConfig } from "../utils/config.js";
 import { fileURLToPath } from "url";
 import path from "path";
+import { printHeader } from "../utils/header.js";
 
-export async function schedule(options: { off?: boolean } = {}): Promise<void> {
+export async function schedule(options: { off?: boolean; silent?: boolean } = {}): Promise<void> {
+  if (!options.silent) printHeader("Schedule");
   if (options.off) {
     try {
       await execa("launchctl", ["unload", PLIST_PATH]);

@@ -1,11 +1,11 @@
 import fs from "fs";
 import chalk from "chalk";
 import { readConfig } from "../utils/config.js";
+import { printHeader } from "../utils/header.js";
 
 export async function status(): Promise<void> {
+  printHeader("Status");
   const config = readConfig();
-
-  console.log(chalk.cyan("\n🕰  Dotfile Time Machine — Status\n"));
 
   console.log(chalk.bold("Remote:"), config.remote ?? chalk.gray("not set"));
 

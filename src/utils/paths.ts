@@ -15,3 +15,9 @@ export function resolvePath(filePath: string): string {
     ? path.join(HOME, filePath.slice(1))
     : path.resolve(filePath);
 }
+
+export function storedRelPath(sourcePath: string): string {
+  return sourcePath.startsWith(HOME + path.sep)
+    ? sourcePath.slice(HOME.length + 1)
+    : sourcePath.slice(1);
+}

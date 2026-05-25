@@ -1,7 +1,9 @@
 import chalk from "chalk";
 import { getLog } from "../utils/git.js";
+import { printHeader } from "../utils/header.js";
 
 export async function log(): Promise<void> {
+  printHeader("Log");
   try {
     const entries = await getLog();
 
@@ -12,7 +14,6 @@ export async function log(): Promise<void> {
       return;
     }
 
-    console.log(chalk.cyan("\n🕰  Snapshot History\n"));
     entries.forEach((entry, i) => {
       console.log(chalk.gray(`  ${i + 1}.`) + "  " + entry);
     });

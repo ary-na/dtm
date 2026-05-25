@@ -3,10 +3,11 @@ import path from "path";
 import { input, select, confirm, checkbox } from "@inquirer/prompts";
 import chalk from "chalk";
 import ora from "ora";
-import { DTM_DIR, HOME } from "../utils/paths.js";
+import { DTM_DIR, HOME, storedRelPath } from "../utils/paths.js";
 import { writeConfig, type WatchedFile } from "../utils/config.js";
 import { initRepo, setRemote } from "../utils/git.js";
 import { schedule } from "./schedule.js";
+import { printHeader } from "../utils/header.js";
 
 interface DefaultDotfile {
   name: string;
@@ -22,7 +23,17 @@ const DEFAULT_DOTFILES: DefaultDotfile[] = [
 ];
 
 export async function init(): Promise<void> {
-  console.log(chalk.cyan("\n🕰  Dotfile Time Machine — Setup\n"));
+  console.log(
+    chalk.cyan(`
+┏━ ━┏┛┏┏
+┃ ┃ ┃ ┃┃┃
+━━  ┛ ┛┛┛
+
+🕰  Dotfile Time Machine
+`),
+  );
+
+  printHeader("Setup");
 
   if (fs.existsSync(DTM_DIR)) {
     console.log(
@@ -59,7 +70,7 @@ export async function init(): Promise<void> {
     fs.existsSync(f.path),
   );
 
-  const watched = await checkbox({
+  const watched = await checkbox<DefaultDotfile>({
     message: "Select dotfiles to track:",
     choices: availableDotfiles.map((f) => ({
       name: f.name,
@@ -78,7 +89,6 @@ export async function init(): Promise<void> {
       [
         "# os",
         ".DS_Store",
-        ".DS_Store?",
         "._*",
         ".Spotlight-V100",
         ".Trashes",
@@ -100,7 +110,7 @@ export async function init(): Promise<void> {
       [
         "# 🕰️ dotfiles",
         "",
-        "My dotfile snapshots, automatically backed up with [dtm](https://www.npmjs.com/package/@ariian/dtm).",
+        "My dotfile snapshots",
         "",
         "## Commands",
         "",
@@ -113,7 +123,7 @@ export async function init(): Promise<void> {
         "dtm diff                        # what changed since last snapshot",
         "dtm diff <file>                 # what changed in one specific file",
         "dtm restore <file>              # restore a file to 1 snapshot ago",
-        "dtm restore <file> -n 5        # restore a file to 5 snapshots ago",
+        "dtm restore <file> -n 5         # restore a file to 5 snapshots ago",
         "dtm schedule                    # enable automatic snapshots",
         "dtm schedule --off              # disable automatic snapshots",
         "dtm status                      # show tracked files and last snapshot",
@@ -122,20 +132,17 @@ export async function init(): Promise<void> {
         "",
         "---",
         "",
-        "[arii.dev](https://arii.dev)",
+        "Made with [dtm](https://www.npmjs.com/package/@ariian/dtm) · [arii.dev](https://arii.dev)",
       ].join("\n"),
     );
 
     await initRepo();
     await setRemote(remote);
 
-    const watchedFiles: WatchedFile[] = (watched as DefaultDotfile[]).map(
-      (f) => ({
-        name: path.basename(f.path),
-        source: f.path,
-        stored: path.join(DTM_DIR, path.basename(f.path)),
-      }),
-    );
+    const watchedFiles: WatchedFile[] = watched.map((f) => {
+      const rel = storedRelPath(f.path);
+      return { name: rel, source: f.path, stored: path.join(DTM_DIR, rel) };
+    });
 
     writeConfig({
       remote,
@@ -146,7 +153,7 @@ export async function init(): Promise<void> {
     });
 
     if (scheduleHours > 0) {
-      await schedule();
+      await schedule({ silent: true });
     }
 
     spinner.succeed(

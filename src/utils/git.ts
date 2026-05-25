@@ -33,8 +33,7 @@ export async function commitSnapshot(): Promise<boolean> {
   const git = getGit();
   const status = await git.status();
   if (status.files.length === 0) return false;
-  const now = new Date();
-  const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+  const date = new Date().toLocaleString("sv").slice(0, 19);
   await git.add(".");
   await git.commit(`snapshot ${date}`);
   return true;
@@ -53,7 +52,7 @@ export async function pushToRemote(): Promise<void> {
 
 export async function getLog(): Promise<string[]> {
   const log = await getGit().log();
-  return log.all.map((c) => `${c.date}  ${c.message}`);
+  return log.all.map((c) => c.message);
 }
 
 export async function getDiff(file?: string): Promise<string> {
@@ -66,4 +65,10 @@ export async function getFileAtCommit(
   n: number,
 ): Promise<string> {
   return await getGit().show([`HEAD~${n}:${file}`]);
+}
+
+export async function removeStoredFile(fileName: string): Promise<void> {
+  const git = getGit();
+  await git.rm([fileName]);
+  await git.commit(`unwatch ${fileName}`);
 }

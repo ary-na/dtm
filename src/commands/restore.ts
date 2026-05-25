@@ -4,8 +4,10 @@ import chalk from "chalk";
 import ora from "ora";
 import { readConfig } from "../utils/config.js";
 import { getFileAtCommit } from "../utils/git.js";
+import { printHeader } from "../utils/header.js";
 
 export async function restore(fileName: string, nStr: string): Promise<void> {
+  printHeader("Restore");
   const n = parseInt(nStr, 10);
 
   if (isNaN(n) || n < 1) {
@@ -28,7 +30,7 @@ export async function restore(fileName: string, nStr: string): Promise<void> {
   try {
     const content = await getFileAtCommit(file.name, n);
 
-    console.log(chalk.cyan(`\n📄 ${fileName} from ${n} snapshot(s) ago:\n`));
+    console.log(chalk.gray(`  ${fileName} from ${n} snapshot(s) ago\n`));
     console.log(chalk.gray("─".repeat(50)));
     console.log(content);
     console.log(chalk.gray("─".repeat(50)));

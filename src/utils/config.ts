@@ -24,7 +24,7 @@ const defaults: DtmConfig = {
 };
 
 export function readConfig(): DtmConfig {
-  if (!fs.existsSync(CONFIG_PATH)) return { ...defaults };
+  if (!fs.existsSync(CONFIG_PATH)) return { ...defaults, watched: [] };
   return JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8")) as DtmConfig;
 }
 

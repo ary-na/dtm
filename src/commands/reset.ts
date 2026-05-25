@@ -2,11 +2,14 @@ import fs from "fs";
 import { confirm } from "@inquirer/prompts";
 import chalk from "chalk";
 import ora from "ora";
+import { execa } from "execa";
 import { DTM_DIR, CONFIG_DIR, PLIST_PATH } from "../utils/paths.js";
+import { printHeader } from "../utils/header.js";
 
 export async function reset(): Promise<void> {
+  printHeader("Reset");
   console.log(
-    chalk.red("\n⚠️  This will delete your entire snapshot repo and config.\n"),
+    chalk.red("⚠️  This will delete your entire snapshot repo and config.\n"),
   );
 
   const confirmed = await confirm({
@@ -31,6 +34,7 @@ export async function reset(): Promise<void> {
     }
 
     if (fs.existsSync(PLIST_PATH)) {
+      try { await execa("launchctl", ["unload", PLIST_PATH]); } catch { /* not loaded */ }
       fs.rmSync(PLIST_PATH);
     }
 

@@ -1,7 +1,9 @@
 import chalk from "chalk";
 import { getDiff } from "../utils/git.js";
+import { printHeader } from "../utils/header.js";
 
 export async function diff(file?: string): Promise<void> {
+  printHeader("Diff");
   try {
     const output = await getDiff(file);
 
@@ -10,11 +12,7 @@ export async function diff(file?: string): Promise<void> {
       return;
     }
 
-    console.log(
-      chalk.cyan(
-        `\n🔍 Changes${file ? ` in ${file}` : ""} since last snapshot:\n`,
-      ),
-    );
+    if (file) console.log(chalk.gray(`  in ${file}\n`));
     console.log(output);
   } catch {
     console.log(
