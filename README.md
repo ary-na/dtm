@@ -93,6 +93,20 @@ On a schedule, this runs automatically via macOS launchd.
 
 ---
 
+## Upgrading from v1.1.x
+
+v1.2.0 changed how files are stored inside `~/.dtm/` — nested files now mirror their original directory structure (e.g. `~/.ssh/config` is stored as `.ssh/config` instead of just `config`). Root-level dotfiles like `.zshrc` and `.gitconfig` are unaffected.
+
+If you tracked any nested files, run once after upgrading:
+
+```bash
+dtm migrate
+```
+
+This moves your stored files to the new structure, updates your config, and commits the change — no data is lost.
+
+---
+
 ## Commands
 
 ### Setup
@@ -148,6 +162,12 @@ Scheduling is enabled automatically during `dtm init`. You can disable or re-ena
 
 ```bash
 dtm reset                       # remove all dtm data and config
+```
+
+### Migration
+
+```bash
+dtm migrate                     # migrate stored files to the new path structure (v1.2.0+)
 ```
 
 ---
