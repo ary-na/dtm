@@ -92,6 +92,7 @@ export async function migrate(): Promise<void> {
         "dtm schedule                    # enable automatic snapshots",
         "dtm schedule --off              # disable automatic snapshots",
         "dtm status                      # show tracked files and last snapshot",
+        "dtm migrate                     # migrate file structure to latest format",
         "dtm reset                       # remove all dtm data and config",
         "```",
         "",
