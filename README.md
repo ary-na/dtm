@@ -124,6 +124,7 @@ Add any file to your snapshot with `dtm watch <path>`.
 ```bash
 dtm diff                        # what changed since last snapshot
 dtm diff .zshrc                 # what changed in one specific file
+dtm diff .ssh/config            # nested files use the relative path
 ```
 
 ### Restoring
@@ -131,6 +132,7 @@ dtm diff .zshrc                 # what changed in one specific file
 ```bash
 dtm restore .zshrc              # restore .zshrc to 1 snapshot ago (default)
 dtm restore .zshrc -n 5        # restore .zshrc to 5 snapshots ago
+dtm restore .ssh/config -n 2   # nested files use the relative path
 ```
 
 ### Scheduling
